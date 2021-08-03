@@ -1,0 +1,24 @@
+{{- range $index, $machinepool := .Values.machinePools }}
+apiVersion: rke-machine.cattle.io/v1
+kind: DigitaloceanMachineTemplate
+metadata:
+  name: {{ $machinepool.name }}
+spec:
+  template:
+    spec:
+      accessToken: {{ $machinepool.name }}
+      backups: {{ $machinepool.backups }}
+      image: {{ $machinepool.image }}
+      ipv6: {{ $machinepool.ipv6 }}
+      monitoring: {{ $machinepool.monitoring }}
+      privateNetworking: {{ $machinepool.privateNetworking }}
+      region: {{ $machinepool.region}}
+      size: {{ $machinepool.size }}
+      sshKeyContents: {{ $machinepool.sshKeyContents }}
+      sshKeyFingerprint: {{ $machinepool.sshKeyFingerprint }}
+      sshPort: {{ $machinepool.sshPort }}
+      sshUser: {{ $machinepool.sshUser }}
+      tags: {{ $machinepool.tags }}
+      userdata: {{ $machinepool.userdata }}
+---
+{{ end }}      

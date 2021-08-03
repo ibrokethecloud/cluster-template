@@ -1,0 +1,42 @@
+# Default values for digitalocean.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+clusterName: demo2
+cloudCredentialSecretName: do
+version: v1.21.2+rke2r1
+machinePools:
+- name: demo2-master
+  backups: false
+  image: ubuntu-20-04-x64
+  ipv6: false
+  monitoring: false
+  privateNetworking: false
+  region: sfo3
+  size: s-2vcpu-4gb
+  sshKeyContents: ""
+  sshKeyFingerprint: "26:90:37:75:f7:dd:d6:43:e9:76:0b:61:3d:83:fd:33"
+  sshPort: "22"
+  tags: ""
+  userdata: ""
+  controlplane: true
+  etcd: true
+  worker: false
+  count: 1
+- name: demo2-worker
+  backups: false
+  image: ubuntu-20-04-x64
+  ipv6: false
+  monitoring: false
+  privateNetworking: false
+  region: sfo3
+  size: s-2vcpu-4gb
+  sshKeyContents: ""
+  sshKeyFingerprint: "26:90:37:75:f7:dd:d6:43:e9:76:0b:61:3d:83:fd:33"
+  sshPort: "22"
+  tags: ""
+  userdata: ""
+  controlplane: false
+  etcd: false
+  worker: true
+  count: 1  

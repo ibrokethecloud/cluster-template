@@ -1,0 +1,77 @@
+apiVersion: provisioning.cattle.io/v1
+kind: Cluster
+metadata:
+  name: {{ .Values.clusterName }}
+spec:
+  cloudCredentialSecretName: {{ .Values.cloudCredentialSecretName }}
+  defaultPodSecurityPolicyTemplateName: unrestricted
+  kubernetesVersion: {{ .Values.version }}}}
+  rkeConfig:
+    chartValues:
+      rke2-calico:
+        calicoctl:
+          image: rancher/mirrored-calico-ctl
+          tag: v3.19.1
+        certs:
+          node:
+            cert: null
+            commonName: null
+            key: null
+          typha:
+            caBundle: null
+            cert: null
+            commonName: null
+            key: null
+        global:
+          systemDefaultRegistry: ""
+        imagePullSecrets: {}
+        installation:
+          calicoNetwork:
+            bgp: Disabled
+            ipPools:
+            - cidr: 10.42.0.0/16
+              encapsulation: VXLAN
+              natOutgoing: Enabled
+          controlPlaneTolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/control-plane
+            operator: Exists
+          - effect: NoExecute
+            key: node-role.kubernetes.io/etcd
+            operator: Exists
+          enabled: true
+          imagePath: rancher
+          imagePrefix: mirrored-calico-
+          kubernetesProvider: ""
+        tigeraOperator:
+          image: rancher/mirrored-calico-operator
+          registry: docker.io
+          version: v1.17.4
+    etcd:
+      snapshotRetention: 5
+      snapshotScheduleCron: 0 */5 * * *
+    localClusterAuthEndpoint: {}
+    machineGlobalConfig:
+      cni: calico
+      profile: null
+    machinePools:
+    {{ range $index, $machinepool := .Values.machinePools }}
+    - name: {{ $machinepool.name }}
+      controlPlaneRole: {{ $machinepool.controlplane }}
+      etcdRole: {{ $machinepool.etcd }}
+      worker: {{ $machinepool.worker }}
+      machineConfigRef:
+        apiVersion: rke-machine.cattle.io/v1
+        kind: DigitaloceanMachineTemplate
+        name: {{ $machinepool.name }}
+      quantity: {{ $machinepool.quantity }}
+    {{ end }}
+    machineSelectorConfig:
+    - config: null
+    upgradeStrategy:
+      controlPlaneConcurrency: 10%
+      controlPlaneDrainOptions:
+        timeout: 0
+      workerConcurrency: 10%
+      workerDrainOptions:
+        timeout: 0

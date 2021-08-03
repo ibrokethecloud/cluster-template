@@ -1,0 +1,7 @@
+apiVersion: v2
+name: digitalocean-calico
+description: DO Cluster template with calico cni
+type: application
+version: 0.1.0
+annotations:
+  catalog.cattle.io/type: cluster-template
