@@ -1,3 +1,4 @@
+{{ $credentialSecret := .Values.cloudCredentialSecretName}}
 {{- range $index, $machinepool := .Values.machinePools }}
 apiVersion: rke-machine.cattle.io/v1
 kind: DigitaloceanMachineTemplate
@@ -6,7 +7,9 @@ metadata:
 spec:
   template:
     spec:
-      accessToken: {{ $machinepool.name }}
+      common:
+        cloudCredentialSecretName: {{ $credentialSecret }}
+      accessToken: {{ $machinepool.accessToken }}
       backups: {{ $machinepool.backups }}
       image: {{ $machinepool.image }}
       ipv6: {{ $machinepool.ipv6 }}
@@ -16,7 +19,7 @@ spec:
       size: {{ $machinepool.size }}
       sshKeyContents: {{ $machinepool.sshKeyContents }}
       sshKeyFingerprint: {{ $machinepool.sshKeyFingerprint }}
-      sshPort: {{ $machinepool.sshPort }}
+      sshPort: {{ $machinepool.sshPort | quote }}
       sshUser: {{ $machinepool.sshUser }}
       tags: {{ $machinepool.tags }}
       userdata: {{ $machinepool.userdata }}

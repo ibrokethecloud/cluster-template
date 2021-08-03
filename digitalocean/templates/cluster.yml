@@ -5,7 +5,7 @@ metadata:
 spec:
   cloudCredentialSecretName: {{ .Values.cloudCredentialSecretName }}
   defaultPodSecurityPolicyTemplateName: unrestricted
-  kubernetesVersion: {{ .Values.version }}}}
+  kubernetesVersion: {{ .Values.version }}
   rkeConfig:
     chartValues:
       rke2-calico:
@@ -59,7 +59,7 @@ spec:
     - name: {{ $machinepool.name }}
       controlPlaneRole: {{ $machinepool.controlplane }}
       etcdRole: {{ $machinepool.etcd }}
-      worker: {{ $machinepool.worker }}
+      workerRole: {{ $machinepool.worker }}
       machineConfigRef:
         apiVersion: rke-machine.cattle.io/v1
         kind: DigitaloceanMachineTemplate
