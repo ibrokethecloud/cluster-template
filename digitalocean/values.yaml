@@ -22,7 +22,7 @@ machinePools:
   controlplane: true
   etcd: true
   worker: false
-  count: 1
+  quantity: 1
 - name: demo2-worker
   backups: false
   image: ubuntu-20-04-x64
@@ -39,4 +39,4 @@ machinePools:
   controlplane: false
   etcd: false
   worker: true
-  count: 1  
+  quantity: 2  
