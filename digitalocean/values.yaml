@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 clusterName: demo2
-cloudCredentialSecretName: do
+cloudCredentialSecretName: "cattle-global-data:cc-mmmv2"
 version: v1.21.2+rke2r1
 machinePools:
 - name: demo2-master

@@ -24,4 +24,4 @@ spec:
       tags: {{ $machinepool.tags }}
       userdata: {{ $machinepool.userdata }}
 ---
-{{ end }}      
+{{ end }}
